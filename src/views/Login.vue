@@ -2,7 +2,7 @@
   <div>
     <div class="border-form">
       <ion-title class="title-login">Đăng nhập</ion-title>
-      <ion-grid :fixed="true">
+      <ion-grid>
         <ion-row>
           <form class="form-login">
             <ion-input
@@ -58,7 +58,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script  lang="ts">
 import
 {
   IonCol,
@@ -72,13 +72,14 @@ import
   IonToolbar
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
+import _ from "cypress/types/lodash";
 
 export default defineComponent({
   name: "Login",
   components: {
     IonCol, IonGrid, IonRow, IonInput, IonTitle, IonButton, IonToolbar , IonText, IonButtons
   },
-
+  setup() {},
   data() {
     return {
       username: '',
@@ -87,11 +88,21 @@ export default defineComponent({
       passwordValid: false,
       usernameValid: false,
       logError: '',
-      account:
-          {
-            username: 'kientt1@vmogroup.com',
-            password: '12345678901'
-          },
+      accounts:
+      [
+        {
+          username: 'kientt1@vmogroup.com',
+          password: '12345678901'
+        },
+        {
+          username: 'trungtn',
+          password: 'trungdeptrai'
+        },
+        {
+          username: '1',
+          password: '1'
+        },
+      ]
     }
   },
 
@@ -107,44 +118,22 @@ export default defineComponent({
     },
     onLogin() {
       if (!this.passwordValid && !this.usernameValid)  {
-        const User = {
+        const user = {
           username: this.username,
           password: this.password
         }
-        if (this.checkLogin(User, this.account)) {
-          this.$router.push('/home')
-        } else {
-          this.logError = 'Username or password false'
-        }
+        this.accounts.forEach((item:any) => {
+          if (item.username == user.username && item.password == user.password) {
+            window.location.replace('/home')
+          } else {
+            this.logError = 'Username or password is false'
+          }
+        })
       } else {
         this.logError = 'Error'
       }
     },
-    checkLogin(obj1:any, obj2:any) {
-        const keys1 = Object.keys(obj1)
-        const keys2 = Object.keys(obj2)
-        if (keys1.length !== keys2.length) {
-          return false;
-        }
-        for (const key of keys1) {
-          const val1 = obj1[key];
-          const val2 = obj2[key];
-          const areObjects = this.isObject(val1) && this.isObject(val2);
-
-          if (
-              areObjects && !this.checkLogin(val1, val2) ||
-              !areObjects && val1 !== val2
-          ) {
-            return false;
-          }
-        }
-
-        return true;
-      },
-      isObject(object:any) {
-        return object != null && typeof object === 'object';
-      }
-    }
+  }
 })
 </script>
 
