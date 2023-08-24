@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import HomePage from '../views/HomePage.vue'
 import Login from "@/views/Login.vue";
+import FeedBack from '@/views/FeedBack.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -16,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/feedback',
     name: 'Feedback',
-    component: HomePage
+    component: FeedBack
   },
   {
     path: '/debts',
@@ -29,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
      name: 'Login',
      component: Login,
      props: true
-  }
+  },
 ]
 
 const router = createRouter({
