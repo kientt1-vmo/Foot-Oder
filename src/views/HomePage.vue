@@ -20,14 +20,16 @@
   <ion-page id="main-content">
     <ion-header>
       <ion-toolbar>
-        <ion-buttons>
+        <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Menu</ion-title>
+        <ion-title>{{title}}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <Menu></Menu>
+      <div v-show="$route.path === '/home'">
+        <Menu></Menu>
+      </div>
     </ion-content>
   </ion-page>
 </template>
@@ -78,22 +80,18 @@ export default defineComponent({
     IonLabel,
   },
   setup() {
-    const showPopup = ref(false);
-
-    const closePopup = () => {
-      showPopup.value = false;
-    };
-
-    const handleSubmit = (inputData: any) => {
-      console.log("Submitted data:", inputData);
-    };
-
-    return {
-      showPopup,
-      closePopup,
-      handleSubmit,
-    };
+    return {};
   },
+  computed: {
+    title() {
+      if (this.$route.path == '/feedback') {
+        return 'Đánh giá'
+      } else if (this.$route.path == '/debts') {
+        return 'Khoản nợ'
+      }
+      return 'Trang chủ'
+    }
+  }
 });
 </script>
 <style scoped>
@@ -107,5 +105,14 @@ export default defineComponent({
   color: white;
   font-weight: 700;
   height: 40px;
+}
+ion-menu::part(backdrop) {
+  background-color: rgba(35, 170, 211, 0.5);
+}
+
+ion-menu::part(container) {
+  border-radius: 0 20px 20px 0;
+
+  box-shadow: 4px 0px 16px rgba(134, 48, 134, 0.18);
 }
 </style>
