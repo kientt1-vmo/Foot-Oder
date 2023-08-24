@@ -72,7 +72,6 @@ import
   IonToolbar
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import _ from "cypress/types/lodash";
 
 export default defineComponent({
   name: "Login",

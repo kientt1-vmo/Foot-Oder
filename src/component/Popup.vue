@@ -29,15 +29,19 @@
 </template>
 
 <script lang="ts">
-import { IonModal, IonicSlides, IonInput, IonButton } from "@ionic/vue";
+import { IonModal, IonicSlides, IonInput, IonButton, IonTitle, IonToolbar, IonHeader, IonContent, } from "@ionic/vue";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   components: {
     IonModal,
+    IonToolbar,
+    IonHeader,
     IonicSlides,
+    IonTitle,
     IonInput,
     IonButton,
+    IonContent,
   },
   props: {
     showPopup: Boolean,
