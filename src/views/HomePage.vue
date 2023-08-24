@@ -5,10 +5,10 @@
         <ion-title>Menu </ion-title>
       </ion-toolbar>
       <ion-list class="list">
-        <ion-button class="btn-menu">
+        <ion-button href="home" class="btn-menu">
           <ion-label>Trang chủ</ion-label>
         </ion-button>
-        <ion-button class="btn-menu">
+        <ion-button href="/feedback" class="btn-menu">
           <ion-label>Feedback</ion-label>
         </ion-button>
         <ion-button class="btn-menu">
@@ -20,7 +20,7 @@
   <ion-page id="main-content">
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="start">
+        <ion-buttons>
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>{{title}}</ion-title>
