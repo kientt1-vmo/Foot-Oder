@@ -1,49 +1,31 @@
 <template>
-  <ion-menu content-id="main-content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Menu </ion-title>
-      </ion-toolbar>
-      <ion-list class="list">
-        <ion-button href="home" class="btn-menu">
-          <ion-label>Trang chủ</ion-label>
-        </ion-button>
-        <ion-button href="/feedback" class="btn-menu">
-          <ion-label>Feedback</ion-label>
-        </ion-button>
-        <ion-button href="/debts" class="btn-menu">
-          <ion-label>Khoản nợ</ion-label>
-        </ion-button>
-      </ion-list>
-    </ion-header>
-  </ion-menu>
-  <ion-page id="main-content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-        <ion-title>{{ title }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content :fullscreen="true">
-      <ion-page class="container">
+  <div>
+    <MenuHeader></MenuHeader>
+    <ion-page id="main-content">
+      <ion-header>
         <ion-toolbar>
-          <ion-title>Image Upload</ion-title>
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <ion-title>Đánh giá của bạn</ion-title>
         </ion-toolbar>
-        <ion-content class="ion-padding">
-          <input type="file" @change="handleImageChange" accept="image/*" />
-          <ion-img class="img" v-if="uploadedImage" :src="uploadedImage" />
-          <ion-input
-            v-model="textInput"
-            placeholder="Để lại đánh giá của bạn"
-          ></ion-input>
-          <ion-button @click="handleClose">Cancel</ion-button>
-          <ion-button @click="handleSubmit">Submit</ion-button>
-        </ion-content>
-      </ion-page>
-    </ion-content>
-  </ion-page>
+      </ion-header>
+      <ion-content :fullscreen="true">
+        <ion-page class="container">
+          <ion-content class="ion-padding">
+            <input type="file" @change="handleImageChange" accept="image/*"  />
+            <ion-img class="img" v-if="uploadedImage" :src="uploadedImage" />
+            <ion-input
+                v-model="textInput"
+                placeholder="Để lại đánh giá của bạn"
+            ></ion-input>
+            <ion-button @click="handleClose">Cancel</ion-button>
+            <ion-button @click="handleSubmit">Submit</ion-button>
+          </ion-content>
+        </ion-page>
+      </ion-content>
+    </ion-page>
+  </div>
 </template>
 
 <script lang="ts">
@@ -56,12 +38,16 @@ import {
   IonInput,
   IonButton,
   IonImg,
+  IonMenuButton,
+  IonButtons
 } from "@ionic/vue";
 import { defineComponent } from "vue";
+import MenuHeader from "@/component/MenuHeader.vue";
 
 export default defineComponent({
   name: "FeedBack",
   components: {
+    MenuHeader,
     IonContent,
     IonHeader,
     IonPage,
@@ -69,7 +55,9 @@ export default defineComponent({
     IonToolbar,
     IonInput,
     IonButton,
+    IonButtons,
     IonImg,
+    IonMenuButton
   },
   data() {
     return {
@@ -78,16 +66,6 @@ export default defineComponent({
     };
   },
   setup() {},
-  computed: {
-    title() {
-      if (this.$route.path == "/feedback") {
-        return "Đánh giá";
-      } else if (this.$route.path == "/debts") {
-        return "Khoản nợ";
-      }
-      return "Trang chủ";
-    },
-  },
   methods: {
     handleImageChange(event: Event) {
       const input = event.target as HTMLInputElement;
