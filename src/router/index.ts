@@ -8,7 +8,7 @@ import Debt from '../views/Debt.vue';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/login'
   },
   {
     path: '/home',
