@@ -1,72 +1,57 @@
 <template>
-  <ion-menu content-id="main-content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Menu </ion-title>
-      </ion-toolbar>
-      <ion-list class="list">
-        <ion-button href="home" class="btn-menu">
-          <ion-label>Trang chủ</ion-label>
-        </ion-button>
-        <ion-button href="/feedback" class="btn-menu">
-          <ion-label>Feedback</ion-label>
-        </ion-button>
-        <ion-button href="/debts" class="btn-menu">
-          <ion-label>Khoản nợ</ion-label>
-        </ion-button>
-      </ion-list>
-    </ion-header>
-  </ion-menu>
-  <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Quản lý nợ</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <ion-list>
-        <ion-item>
-          <ion-label class="ion-text-center ion-width-10">STT</ion-label>
-          <ion-label class="ion-text-center ion-width-30">Ngày</ion-label>
-          <ion-label class="ion-text-center ion-width-30">Món</ion-label>
-          <ion-label class="ion-text-center ion-width-30">Số tiền</ion-label>
-        </ion-item>
-        <ion-item v-for="(debt, index) in debts" :key="index">
-          <ion-label class="ion-text-center ion-width-10">{{
-            index + 1
-          }}</ion-label>
-          <ion-label class="ion-text-center ion-width-30">{{
-            debt.date
-          }}</ion-label>
-          <ion-label class="ion-text-center ion-width-30">{{
-            debt.item
-          }}</ion-label>
-          <ion-label class="ion-text-center ion-width-30"
+  <div>
+    <MenuHeader></MenuHeader>
+    <ion-page>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Quản lý nợ</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list>
+          <ion-item>
+            <ion-label class="ion-text-center ion-width-10">STT</ion-label>
+            <ion-label class="ion-text-center ion-width-30">Ngày</ion-label>
+            <ion-label class="ion-text-center ion-width-30">Món</ion-label>
+            <ion-label class="ion-text-center ion-width-30">Số tiền</ion-label>
+          </ion-item>
+          <ion-item v-for="(debt, index) in debts" :key="index">
+            <ion-label class="ion-text-center ion-width-10">{{
+                index + 1
+              }}</ion-label>
+            <ion-label class="ion-text-center ion-width-30">{{
+                debt.date
+              }}</ion-label>
+            <ion-label class="ion-text-center ion-width-30">{{
+                debt.item
+              }}</ion-label>
+            <ion-label class="ion-text-center ion-width-30"
             >{{ debt.amount }}k</ion-label
-          >
-        </ion-item>
-      </ion-list>
-      <div class="ion-margin-top ion-text-center">
-        <h3 class="ion-text-end">Tổng số nợ: {{ calculatedTotalDebt }}</h3>
-        <h4 class="ion-text-end">Trạng thái: {{ status }}</h4>
-        <ion-button class="ion-align-items-start" @click="showImageModal = true">Trả nợ</ion-button>
-      </div>
-      <ion-modal v-if="showImageModal" @ionModalDidDismiss="dismissModal">
-        <ion-header class="ion-text-center">
-          <ion-toolbar>
-            <ion-title>Mã QR</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content class="ion-text-center">
-          <ion-img class="full-width"
-            src="https://tse2.mm.bing.net/th?id=OIP.DLME37PkypABEXbcBXfzIAHaFg&pid=Api&P=0&h=220"
-            alt="Ảnh xác nhận trả nợ"
-          ></ion-img>
-          <ion-button expand="full" @click="confirmPaymentAndDismiss">Xác nhận</ion-button>
-        </ion-content>
-      </ion-modal>
-    </ion-content>
-  </ion-page>
+            >
+          </ion-item>
+        </ion-list>
+        <div class="ion-margin-top ion-text-center">
+          <h3 class="ion-text-end">Tổng số nợ: {{ calculatedTotalDebt }}</h3>
+          <h4 class="ion-text-end">Trạng thái: {{ status }}</h4>
+          <ion-button class="ion-align-items-start" @click="showImageModal = true">Trả nợ</ion-button>
+        </div>
+        <ion-modal v-if="showImageModal" @ionModalDidDismiss="dismissModal">
+          <ion-header class="ion-text-center">
+            <ion-toolbar>
+              <ion-title>Mã QR</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-text-center">
+            <ion-img class="full-width"
+                     src="https://tse2.mm.bing.net/th?id=OIP.DLME37PkypABEXbcBXfzIAHaFg&pid=Api&P=0&h=220"
+                     alt="Ảnh xác nhận trả nợ"
+            ></ion-img>
+            <ion-button expand="full" @click="confirmPaymentAndDismiss">Xác nhận</ion-button>
+          </ion-content>
+        </ion-modal>
+      </ion-content>
+    </ion-page>
+  </div>
 </template>
 
 <script lang="ts">
@@ -81,10 +66,12 @@ import {
   IonImg,
 } from "@ionic/vue";
 import { computed, defineComponent, ref } from "vue";
+import MenuHeader from "@/component/MenuHeader.vue";
 
 export default defineComponent({
   name: "Debt",
   components: {
+    MenuHeader,
     IonContent,
     IonHeader,
     IonPage,

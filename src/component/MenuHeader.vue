@@ -11,7 +11,7 @@
         <ion-button href="/feedback" class="btn-menu">
           <ion-label>Feedback</ion-label>
         </ion-button>
-        <ion-button class="btn-menu">
+        <ion-button href="/debts" class="btn-menu">
           <ion-label>Khoản nợ</ion-label>
         </ion-button>
       </ion-list>
