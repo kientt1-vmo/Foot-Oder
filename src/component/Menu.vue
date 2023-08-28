@@ -1,7 +1,9 @@
 <template>
   <ion-grid>
     <ion-row>
-      <div v-for="item in slots" >
+      <div v-for="(item,index) in slots"
+           :key="index"
+      >
         <ion-card class="item-card">
           <ion-card-header>
             <ion-card-title class="card-title">{{item.type === 0 ? 'Trưa' : 'Chiều'}} ngày {{item.date}}</ion-card-title>
@@ -18,21 +20,30 @@
               <div>Giá trung bình: {{item.price_min}} VND - {{item.price_max}} VND </div>
               <div>Thời gian order: {{item.start_time_order}} - {{item.end_time_order}}</div>
               <div>Số lượng giới hạn: {{item.limit_slot}} suất</div>
+              <div>Người quản lý đơn: {{item.user_created}}</div>
             </div>
           </ion-card-content>
           <ion-card-content class="card-title">
-            <ion-button @click="showPopup = true"> Đặt </ion-button>
-            <popup
-                :show-popup="showPopup"
-                @close="closePopup"
-                @submit="handleSubmit"
-            />
+            <ion-button @click="eventClickOrder(item, index)"> Đặt </ion-button>
           </ion-card-content>
         </ion-card>
       </div>
-
+      <popup
+          :show-popup="showPopup"
+          :data="selectedItem"
+          @close="closePopup"
+          @submit="handleSubmit"
+      />
     </ion-row>
   </ion-grid>
+  <ion-alert
+      :is-open="isOpen"
+      header="Thông báo"
+      sub-header="Bạn đã order thành công"
+      message="Mọi thông tin bạn có thể liên hệ người quản lý đơn hàng"
+      buttons="alertButtons"
+      @didDismiss="setOpen(false)"
+  ></ion-alert>
 </template>
 
 <script lang="ts">
@@ -55,6 +66,7 @@ import {
   IonButton,
   IonImg,
   IonRow,
+  IonAlert,
 } from "@ionic/vue";
 import { defineComponent, ref } from "vue";
 import Popup from "@/component/Popup.vue";
@@ -78,7 +90,8 @@ export default defineComponent({
     IonImg,
     Popup,
     IonCardTitle,
-    IonRow
+    IonRow,
+    IonAlert
   },
   setup() {
     const showPopup = ref(false);
@@ -88,10 +101,19 @@ export default defineComponent({
     };
 
     const handleSubmit = (inputData: any) => {
-      console.log("Submitted data:", inputData);
+      isOpen.value = true;
     };
 
+    const isOpen = ref(false);
+    const alertButtons = ['OK'];
+
+    const setOpen = (state: boolean) => {
+      isOpen.value = state;
+    };
     return {
+      setOpen,
+      alertButtons,
+      isOpen,
       showPopup,
       closePopup,
       handleSubmit,
@@ -99,6 +121,7 @@ export default defineComponent({
   },
   data() {
     return {
+      selectedItem: {},
       slots: [
         {
           id: 1,
@@ -123,7 +146,8 @@ export default defineComponent({
           price_max: '50.000',
           start_time_order: '10:30',
           end_time_order: '11:15',
-          limit_slot: 30
+          limit_slot: 30,
+          user_created: 'trungtn',
         },
         {
           id: 2,
@@ -148,7 +172,8 @@ export default defineComponent({
           price_max: '45.000',
           start_time_order: '10:30',
           end_time_order: '11:15',
-          limit_slot: 20
+          limit_slot: 20,
+          user_created: 'trungtn',
         },
         {
           id: 3,
@@ -173,7 +198,8 @@ export default defineComponent({
           price_max: '50.000',
           start_time_order: '10:30',
           end_time_order: '11:15',
-          limit_slot: 30
+          limit_slot: 30,
+          user_created: 'trungtn',
         },
         {
           id: 4,
@@ -198,7 +224,8 @@ export default defineComponent({
           price_max: '50.000',
           start_time_order: '10:30',
           end_time_order: '11:15',
-          limit_slot: 30
+          limit_slot: 30,
+          user_created: 'trungtn',
         },
         {
           id: 5,
@@ -223,11 +250,18 @@ export default defineComponent({
           price_max: '50.000',
           start_time_order: '10:30',
           end_time_order: '11:15',
-          limit_slot: 30
+          limit_slot: 30,
+          user_created: 'trungtn',
         }
       ],
     }
   },
+  methods: {
+    eventClickOrder(item: any, index: any) {
+      this.selectedItem = item
+      this.showPopup = true
+    },
+  }
 });
 </script>
 
@@ -250,7 +284,7 @@ export default defineComponent({
 @media screen and (min-width: 768px) {
   .item-card {
     width: 320px;
-    height: 450px;
+    height: 480px;
   }
   .img-card {
     height: 210px;
