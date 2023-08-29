@@ -1,10 +1,9 @@
 <template>
   <div>
-    <MenuHeader></MenuHeader>
     <ion-page>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Quản lý nợ</ion-title>
+          <ion-title>{{ title }}</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
@@ -17,40 +16,42 @@
           </ion-item>
           <ion-item v-for="(debt, index) in debts" :key="index">
             <ion-label class="ion-text-center ion-width-10">{{
-                index + 1
-              }}</ion-label>
+              index + 1
+            }}</ion-label>
             <ion-label class="ion-text-center ion-width-30">{{
-                debt.date
-              }}</ion-label>
+              debt.date
+            }}</ion-label>
             <ion-label class="ion-text-center ion-width-30">{{
-                debt.item
-              }}</ion-label>
+              debt.item
+            }}</ion-label>
             <ion-label class="ion-text-center ion-width-30"
-            >{{ debt.amount }}k</ion-label
+              >{{ debt.amount }}k</ion-label
             >
           </ion-item>
         </ion-list>
         <div class="ion-margin-top ion-text-center">
-          <h3 class="ion-text-end">Tổng số nợ: {{ calculatedTotalDebt }}</h3>
+          <h3 class="ion-text-end">Tổng số nợ: {{ calculatedTotalDebt }}k</h3>
           <h4 class="ion-text-end">Trạng thái: {{ status }}</h4>
-          <ion-button class="ion-align-items-start" @click="showImageModal = true">Trả nợ</ion-button>
+          <ion-button
+            class="ion-align-items-start"
+            @click="showImageModal = true"
+            >Trả nợ</ion-button
+          >
         </div>
-        <ion-modal v-if="showImageModal" @ionModalDidDismiss="dismissModal">
-          <ion-header class="ion-text-center">
-            <ion-toolbar>
-              <ion-title>Mã QR</ion-title>
-            </ion-toolbar>
-          </ion-header>
-          <ion-content class="ion-text-center">
-            <ion-img class="full-width"
-                     src="https://tse2.mm.bing.net/th?id=OIP.DLME37PkypABEXbcBXfzIAHaFg&pid=Api&P=0&h=220"
-                     alt="Ảnh xác nhận trả nợ"
-            ></ion-img>
-            <ion-button expand="full" @click="confirmPaymentAndDismiss">Xác nhận</ion-button>
-          </ion-content>
-        </ion-modal>
+        <image-modal
+          :show="showImageModal"
+          @confirm="confirmPaymentAndDismiss"
+          @dismiss="dismissModal"
+        ></image-modal>
       </ion-content>
     </ion-page>
+    <ion-alert
+      :is-open="isOpen"
+      header="Thông báo"
+      message="Chờ admin xác nhận !!!"
+      :buttons="alertButtons"
+      @ionBackdropTap="dismissAlert"
+    ></ion-alert>
   </div>
 </template>
 
@@ -64,10 +65,11 @@ import {
   IonInput,
   IonButton,
   IonImg,
+  IonAlert,
 } from "@ionic/vue";
 import { computed, defineComponent, ref } from "vue";
 import MenuHeader from "@/component/MenuHeader.vue";
-
+import ImageModal from "@/component/ImageModal.vue";
 export default defineComponent({
   name: "Debt",
   components: {
@@ -80,11 +82,14 @@ export default defineComponent({
     IonInput,
     IonButton,
     IonImg,
+    ImageModal,
+    IonAlert,
   },
   data() {
     return {
       uploadedImage: "",
       textInput: "",
+      showImageModal: false,
     };
   },
   setup() {
@@ -95,10 +100,9 @@ export default defineComponent({
       { date: "2023-08-24", item: "Món A", amount: 100 },
       { date: "2023-08-23", item: "Món B", amount: 150 },
     ]);
-
+    const isOpen = ref(false);
     const showImageModal = ref(false);
     const status = ref("Chưa trả nợ");
-
     const calculatedTotalDebt = computed(() => {
       return debts.value.reduce((total, debt) => total + debt.amount, 0);
     });
@@ -106,13 +110,22 @@ export default defineComponent({
     const confirmPaymentAndDismiss = () => {
       status.value = "Đang xác nhận";
       showImageModal.value = false;
+      isOpen.value = true;
     };
-
     const dismissModal = () => {
       showImageModal.value = false;
       status.value = "Chưa trả nợ";
     };
+    const alertButtons = computed(() => [
+      {
+        text: "OK",
+        handler: dismissAlert,
+      },
+    ]);
 
+    const dismissAlert = () => {
+      isOpen.value = false;
+    };
     return {
       debts,
       showImageModal,
@@ -120,6 +133,9 @@ export default defineComponent({
       calculatedTotalDebt,
       confirmPaymentAndDismiss,
       dismissModal,
+      isOpen,
+      dismissAlert,
+      alertButtons,
     };
   },
 

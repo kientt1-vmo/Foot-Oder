@@ -18,9 +18,18 @@
     </ion-header>
   </ion-menu>
 </template>
-<script setup lang="ts">
+<script lang="ts">
+  import {IonButton, IonHeader, IonLabel, IonList, IonMenu, IonTitle, IonToolbar} from "@ionic/vue";
+import { defineComponent} from "vue";
 
-import {IonButton, IonHeader, IonLabel, IonList, IonMenu, IonTitle, IonToolbar} from "@ionic/vue";
+  export default defineComponent({
+  components: {
+    IonToolbar,
+    IonHeader,
+    IonTitle,
+    IonButton,
+  },
+  })
 </script>
 
 <style scoped>
