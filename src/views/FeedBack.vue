@@ -13,11 +13,11 @@
       <ion-content :fullscreen="true">
         <ion-page class="container">
           <ion-content class="ion-padding">
-            <input type="file" @change="handleImageChange" accept="image/*"  />
+            <input type="file" @change="handleImageChange" accept="image/*" />
             <ion-img class="img" v-if="uploadedImage" :src="uploadedImage" />
             <ion-input
-                v-model="textInput"
-                placeholder="Để lại đánh giá của bạn"
+              v-model="textInput"
+              placeholder="Để lại đánh giá của bạn"
             ></ion-input>
             <ion-button @click="handleClose">Cancel</ion-button>
             <ion-button @click="handleSubmit">Submit</ion-button>
@@ -39,11 +39,10 @@ import {
   IonButton,
   IonImg,
   IonMenuButton,
-  IonButtons
+  IonButtons,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 import MenuHeader from "@/component/MenuHeader.vue";
-
 export default defineComponent({
   name: "FeedBack",
   components: {
@@ -57,7 +56,7 @@ export default defineComponent({
     IonButton,
     IonButtons,
     IonImg,
-    IonMenuButton
+    IonMenuButton,
   },
   data() {
     return {
