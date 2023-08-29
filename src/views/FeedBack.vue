@@ -17,14 +17,26 @@
             <ion-img class="img" v-if="uploadedImage" :src="uploadedImage" />
             <ion-input
               v-model="textInput"
-              placeholder="Để lại đánh giá của bạn"
+              placeholder="  Để lại đánh giá của bạn"
             ></ion-input>
-            <ion-button @click="handleClose">Cancel</ion-button>
-            <ion-button @click="handleSubmit">Submit</ion-button>
+            <ion-button class="ion-margin" @click="handleClose"
+              >Cancel</ion-button
+            >
+            <ion-button @click="handleSubmit"
+              >Submit</ion-button
+            >
           </ion-content>
         </ion-page>
       </ion-content>
     </ion-page>
+    <ion-alert
+      :is-open="isOpen"
+      header="Thông báo"
+      sub-header="Bạn đã gửi đánh giá thành công"
+      message="Cảm ơn bạn đã sử dụng dịch vụ"
+      :buttons="alertButtons"
+      @ionBackdropTap="dismissAlert"
+    ></ion-alert>
   </div>
 </template>
 
@@ -40,8 +52,9 @@ import {
   IonImg,
   IonMenuButton,
   IonButtons,
+  IonAlert,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import MenuHeader from "@/component/MenuHeader.vue";
 export default defineComponent({
   name: "FeedBack",
@@ -57,6 +70,7 @@ export default defineComponent({
     IonButtons,
     IonImg,
     IonMenuButton,
+    IonAlert,
   },
   data() {
     return {
@@ -64,7 +78,27 @@ export default defineComponent({
       textInput: "",
     };
   },
-  setup() {},
+  setup() {
+    const isOpen = ref(false);
+    const openAlert = () => {
+      isOpen.value = true;
+    };
+    const dismissAlert = () => {
+      isOpen.value = false;
+    };
+    const alertButtons = computed(() => [
+      {
+        text: "OK",
+        handler: dismissAlert,
+      },
+    ]);
+    return {
+      openAlert,
+      isOpen,
+      dismissAlert,
+      alertButtons,
+    };
+  },
   methods: {
     handleImageChange(event: Event) {
       const input = event.target as HTMLInputElement;
@@ -77,6 +111,7 @@ export default defineComponent({
       }
     },
     handleSubmit() {
+      this.openAlert();
       this.uploadedImage = "";
       this.textInput = "";
     },
