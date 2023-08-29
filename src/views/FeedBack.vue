@@ -11,23 +11,25 @@
           <UserProfile class="ion-padding" slot="end"/>
         </ion-toolbar>
       </ion-header>
-      <ion-content :fullscreen="true">
-        <ion-page class="container">
-          <ion-content class="ion-padding">
-            <input type="file" @change="handleImageChange" accept="image/*" />
-            <ion-img class="img" v-if="uploadedImage" :src="uploadedImage" />
-            <ion-input
-              v-model="textInput"
-              placeholder="  Để lại đánh giá của bạn"
-            ></ion-input>
-            <ion-button class="ion-margin" @click="handleClose"
-              >Cancel</ion-button
-            >
-            <ion-button @click="handleSubmit"
-              >Submit</ion-button
-            >
-          </ion-content>
-        </ion-page>
+      <ion-content :fullscreen="true" class="ion-padding">
+          <ion-item >
+            <input type="file" @change="handleImageChange" accept="image/*"  />
+          </ion-item>
+          <ion-item v-if="uploadedImage">
+            <ion-img class="img"  :src="uploadedImage" />
+          </ion-item>
+          <ion-item>
+            <ion-textarea
+                v-model="textInput"
+                class="text-area"
+                label="Đánh giá:"
+                placeholder="Để lại đánh giá của bạn"
+            ></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-button slot="end" class="btn-popup" color="danger" @click="handleClose">Hủy bỏ</ion-button>
+            <ion-button slot="end" class="btn-popup" color="success" @click="handleSubmit">Đánh giá</ion-button>
+          </ion-item>
       </ion-content>
     </ion-page>
     <ion-alert
@@ -54,6 +56,7 @@ import {
   IonMenuButton,
   IonButtons,
   IonAlert,
+  IonTextarea
 } from "@ionic/vue";
 import { computed, defineComponent, ref } from "vue";
 import MenuHeader from "@/component/MenuHeader.vue";
@@ -74,7 +77,8 @@ export default defineComponent({
     IonImg,
     IonMenuButton,
     IonAlert,
-    UserProfile
+    UserProfile,
+    IonTextarea
   },
   data() {
     return {
@@ -128,24 +132,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.container {
-  margin-top: 50px;
-}
+
 .img {
   max-width: 200px;
   max-height: 300px;
 }
-.list {
-  border-top: solid 1px;
-}
-.btn-menu {
-  width: 95%;
-  --background: #7e7e7e;
-  margin: 4px 10px 4px 10px;
-  color: white;
-  font-weight: 700;
-  height: 40px;
-}
+
 ion-menu::part(backdrop) {
   background-color: rgba(35, 170, 211, 0.5);
 }
@@ -153,6 +145,21 @@ ion-menu::part(backdrop) {
 ion-menu::part(container) {
   border-radius: 0 20px 20px 0;
 
-  box-shadow: 4px 0px 16px rgba(134, 48, 134, 0.18);
+  box-shadow: 4px 0 16px rgba(134, 48, 134, 0.18);
 }
+.btn-popup {
+  margin-left: 20px;
+  width: 50%;
+  max-width: 200px;
+  height: 40px;
+  margin-right: 10px;
+  color: white;
+  font-weight: 500;
+}
+.text-area {
+  min-height: 200px;
+  padding: 4px 0 4px 0;
+  margin: 8px 0 8px 0;
+}
+
 </style>

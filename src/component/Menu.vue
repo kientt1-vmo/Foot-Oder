@@ -41,7 +41,7 @@
       header="Thông báo"
       sub-header="Bạn đã order thành công"
       message="Mọi thông tin bạn có thể liên hệ người quản lý đơn hàng"
-      buttons="alertButtons"
+      :buttons="alertButtons"
       @didDismiss="setOpen(false)"
   ></ion-alert>
 </template>
@@ -105,7 +105,7 @@ export default defineComponent({
     };
 
     const isOpen = ref(false);
-    const alertButtons = ['OK'];
+    const alertButtons = [{text: 'Ok'}];
 
     const setOpen = (state: boolean) => {
       isOpen.value = state;
