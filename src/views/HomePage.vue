@@ -6,8 +6,9 @@
         <ion-toolbar>
           <ion-buttons>
             <ion-menu-button></ion-menu-button>
+            <ion-title>Trang chủ</ion-title>
           </ion-buttons>
-          <ion-title>Trang chủ</ion-title>
+          <UserProfile class="ion-padding" slot="end"/>
         </ion-toolbar>
       </ion-header>
       <ion-content :fullscreen="true">
@@ -43,6 +44,7 @@ import { defineComponent, ref } from "vue";
 import Popup from "@/component/Popup.vue";
 import Menu from "@/component/Menu.vue"
 import MenuHeader from "@/component/MenuHeader.vue";
+import UserProfile from "@/component/UserProfile.vue";
 export default defineComponent({
   components: {
     MenuHeader,
@@ -65,6 +67,7 @@ export default defineComponent({
     Popup,
     Menu,
     IonLabel,
+    UserProfile
   },
   setup() {
     return {};

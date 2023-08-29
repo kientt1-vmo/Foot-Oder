@@ -8,6 +8,7 @@
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
           <ion-title>{{ title }}</ion-title>
+          <UserProfile class="ion-padding" slot="end"/>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
@@ -70,6 +71,8 @@ import {
 import { computed, defineComponent, ref } from "vue";
 import MenuHeader from "@/component/MenuHeader.vue";
 import ImageModal from "@/component/ImageModal.vue";
+import UserProfile from "@/component/UserProfile.vue";
+
 export default defineComponent({
   name: "Debt",
   components: {
@@ -84,6 +87,7 @@ export default defineComponent({
     IonImg,
     ImageModal,
     IonAlert,
+    UserProfile
   },
   data() {
     return {

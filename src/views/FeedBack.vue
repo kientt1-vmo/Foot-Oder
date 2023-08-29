@@ -8,6 +8,7 @@
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
           <ion-title>Đánh giá của bạn</ion-title>
+          <UserProfile class="ion-padding" slot="end"/>
         </ion-toolbar>
       </ion-header>
       <ion-content :fullscreen="true">
@@ -56,6 +57,8 @@ import {
 } from "@ionic/vue";
 import { computed, defineComponent, ref } from "vue";
 import MenuHeader from "@/component/MenuHeader.vue";
+import UserProfile from "@/component/UserProfile.vue";
+
 export default defineComponent({
   name: "FeedBack",
   components: {
@@ -71,6 +74,7 @@ export default defineComponent({
     IonImg,
     IonMenuButton,
     IonAlert,
+    UserProfile
   },
   data() {
     return {
