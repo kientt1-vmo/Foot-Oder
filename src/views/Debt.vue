@@ -1,23 +1,23 @@
 <template>
   <div>
-    <ion-page>
+    <MenuHeader></MenuHeader>
+    <ion-page id="main-content" >
       <ion-header>
         <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
           <ion-title>{{ title }}</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
         <ion-list>
-          <ion-item>
-            <ion-label class="ion-text-center ion-width-10">STT</ion-label>
+          <ion-item class="item-table">
             <ion-label class="ion-text-center ion-width-30">Ngày</ion-label>
             <ion-label class="ion-text-center ion-width-30">Món</ion-label>
             <ion-label class="ion-text-center ion-width-30">Số tiền</ion-label>
           </ion-item>
           <ion-item v-for="(debt, index) in debts" :key="index">
-            <ion-label class="ion-text-center ion-width-10">{{
-              index + 1
-            }}</ion-label>
             <ion-label class="ion-text-center ion-width-30">{{
               debt.date
             }}</ion-label>
@@ -30,7 +30,7 @@
           </ion-item>
         </ion-list>
         <div class="ion-margin-top ion-text-center">
-          <h3 class="ion-text-end">Tổng số nợ: {{ calculatedTotalDebt }}k</h3>
+          <h3 class="ion-text-end">Tổng: {{ calculatedTotalDebt }}k</h3>
           <h4 class="ion-text-end">Trạng thái: {{ status }}</h4>
           <ion-button
             class="ion-align-items-start"
@@ -171,6 +171,9 @@ export default defineComponent({
   color: white;
   font-weight: 700;
   height: 40px;
+}
+.item-table{
+  font-size: large;
 }
 ion-menu::part(backdrop) {
   background-color: rgba(35, 170, 211, 0.5);
