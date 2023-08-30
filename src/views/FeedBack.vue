@@ -8,28 +8,43 @@
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
           <ion-title>Đánh giá của bạn</ion-title>
-          <UserProfile class="ion-padding" slot="end"/>
+          <ion-buttons slot="end">
+            <UserProfile class="ion-padding" />
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content :fullscreen="true" class="ion-padding">
-          <ion-item >
-            <input type="file" @change="handleImageChange" accept="image/*"  />
-          </ion-item>
-          <ion-item v-if="uploadedImage">
-            <ion-img class="img"  :src="uploadedImage" />
-          </ion-item>
-          <ion-item>
-            <ion-textarea
-                v-model="textInput"
-                class="text-area"
-                label="Đánh giá:"
-                placeholder="Để lại đánh giá của bạn"
-            ></ion-textarea>
-          </ion-item>
-          <ion-item>
-            <ion-button slot="end" class="btn-popup" color="danger" @click="handleClose">Hủy bỏ</ion-button>
-            <ion-button slot="end" class="btn-popup" color="success" @click="handleSubmit">Đánh giá</ion-button>
-          </ion-item>
+        <ion-item>
+          
+          <ion-button class="btn-take-photo" color="primary" @click="takePhoto"  icon-only
+            >
+            <ion-icon class="ion-photo" :icon="cameraOutline"></ion-icon>
+            Chụp ảnh
+            </ion-button>
+        </ion-item>
+        <ion-item>
+          <input type="file" @change="handleImageChange" accept="image/*" />
+        </ion-item>
+        <ion-item v-if="uploadedImage">
+          <ion-img class="img" :src="uploadedImage" />
+        </ion-item>
+
+        <ion-item>
+          <ion-textarea
+            v-model="textInput"
+            class="text-area"
+            label="Đánh giá:"
+            placeholder="Để lại đánh giá của bạn"
+          ></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-button class="btn-popup" color="danger" @click="handleClose"
+            >Hủy bỏ</ion-button
+          >
+          <ion-button class="btn-popup" color="success" @click="handleSubmit"
+            >Đánh giá</ion-button
+          >
+        </ion-item>
       </ion-content>
     </ion-page>
     <ion-alert
@@ -56,11 +71,14 @@ import {
   IonMenuButton,
   IonButtons,
   IonAlert,
-  IonTextarea
+  IonTextarea,
+  IonIcon 
 } from "@ionic/vue";
 import { computed, defineComponent, ref } from "vue";
 import MenuHeader from "@/component/MenuHeader.vue";
 import UserProfile from "@/component/UserProfile.vue";
+import { Camera, CameraResultType } from "@capacitor/camera";
+import { cameraOutline } from 'ionicons/icons';
 
 export default defineComponent({
   name: "FeedBack",
@@ -78,7 +96,8 @@ export default defineComponent({
     IonMenuButton,
     IonAlert,
     UserProfile,
-    IonTextarea
+    IonTextarea,
+    IonIcon 
   },
   data() {
     return {
@@ -105,6 +124,7 @@ export default defineComponent({
       isOpen,
       dismissAlert,
       alertButtons,
+      cameraOutline
     };
   },
   methods: {
@@ -127,12 +147,26 @@ export default defineComponent({
       this.uploadedImage = "";
       this.textInput = "";
     },
+    async takePhoto() {
+      try {
+        const image = await Camera.getPhoto({
+          resultType: CameraResultType.DataUrl,
+        });
+        this.handlePhotoCapture(image.dataUrl);
+      } catch (error) {
+        console.error("Error taking photo:", error);
+      }
+    },
+    handlePhotoCapture(dataUrl: string | undefined) {
+      if (dataUrl) {
+        this.uploadedImage = dataUrl;
+      }
+    },
   },
 });
 </script>
 
 <style scoped>
-
 .img {
   max-width: 200px;
   max-height: 300px;
@@ -156,10 +190,17 @@ ion-menu::part(container) {
   color: white;
   font-weight: 500;
 }
+.btn-take-photo {
+  width: 40%;
+  height: 40px;
+  margin-bottom: 10px;
+}
+.ion-photo{
+  margin-right: 5px;
+}
 .text-area {
   min-height: 200px;
   padding: 4px 0 4px 0;
   margin: 8px 0 8px 0;
 }
-
 </style>
