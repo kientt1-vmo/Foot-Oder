@@ -6,7 +6,7 @@
       >
         <ion-card class="item-card">
           <ion-card-header>
-            <ion-card-title class="card-title">{{item.type === 0 ? 'Trưa' : 'Chiều'}} ngày {{item.date}}</ion-card-title>
+            <ion-card-title class="card-title">{{item.type === 0 ? 'Trưa' : 'Chiều'}} ngày {{convertDay(item.date)}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <ion-img
@@ -18,7 +18,7 @@
             <div class="menu-info">
               <div >Loại: <span >{{ item.tags }}</span> </div>
               <div>Giá trung bình: {{item.price_min}} VND - {{item.price_max}} VND </div>
-              <div>Thời gian order: {{convertDayJsToHM(item.start_time_order)}} - {{convertDayJsToHM(item.end_time_order)}}</div>
+              <div>Thời gian order: {{convertDate(item.start_time_order)}} - {{convertDate(item.end_time_order)}}</div>
               <div>Số lượng giới hạn: {{item.limit_slot}} suất</div>
               <div>Người quản lý đơn: {{item.user_created}}</div>
             </div>
@@ -92,7 +92,7 @@ export default defineComponent({
     Popup,
     IonCardTitle,
     IonRow,
-    IonAlert
+    IonAlert,
   },
   setup() {
     const showPopup = ref(false);
@@ -126,7 +126,7 @@ export default defineComponent({
       slots: [
         {
           id: 1,
-          date: '24/08',
+          date: '2023-09-31 15:08:55',
           type: 0,
           imgs: [
             {
@@ -146,13 +146,13 @@ export default defineComponent({
           price_min: '25.000',
           price_max: '50.000',
           start_time_order: '2023-08-30 15:08:55',
-          end_time_order: '2023-08-30 14:08:55',
+          end_time_order: '2023-09-31 14:08:55',
           limit_slot: 30,
           user_created: 'trungtn',
         },
         {
           id: 2,
-          date: '24/08',
+          date: '2023-09-31 15:08:55',
           type: 1,
           imgs: [
             {
@@ -172,13 +172,13 @@ export default defineComponent({
           price_min: '20.000',
           price_max: '45.000',
           start_time_order: '2023-08-30 15:08:55',
-          end_time_order: '2023-08-30 14:08:55',
+          end_time_order: '2023-09-31 14:08:55',
           limit_slot: 20,
           user_created: 'trungtn',
         },
         {
           id: 3,
-          date: '24/08',
+          date: '2023-08-30 15:08:55',
           type: 0,
           imgs: [
             {
@@ -197,14 +197,14 @@ export default defineComponent({
           tags: 'Cơm, Bún trộn, Cơm rang',
           price_min: '25.000',
           price_max: '50.000',
-          start_time_order: '2023-08-30 15:08:55',
+          start_time_order: '2023-08-30 13:08:55',
           end_time_order: '2023-08-30 14:08:55',
           limit_slot: 30,
           user_created: 'trungtn',
         },
         {
           id: 4,
-          date: '24/08',
+          date: '2023-08-30 15:08:55',
           type: 0,
           imgs: [
             {
@@ -224,13 +224,13 @@ export default defineComponent({
           price_min: '25.000',
           price_max: '50.000',
           start_time_order: '2023-08-30 15:08:55',
-          end_time_order: '2023-08-30 15:08:55',
+          end_time_order: '2023-08-30 18:08:55',
           limit_slot: 30,
           user_created: 'trungtn',
         },
         {
           id: 5,
-          date: '24/08',
+          date: '2023-08-30 15:08:55',
           type: 1,
           imgs: [
             {
@@ -250,7 +250,7 @@ export default defineComponent({
           price_min: '25.000',
           price_max: '50.000',
           start_time_order: '2023-08-30 15:08:55',
-          end_time_order: '2023-08-30 14:08:55',
+          end_time_order: '2023-08-30 19:08:55',
           limit_slot: 30,
           user_created: 'trungtn',
         }
@@ -265,8 +265,11 @@ export default defineComponent({
     disableBtn(time: any) {
       return dayjs().isAfter(dayjs(time))
     },
-    convertDayJsToHM(time: any) {
-      return dayjs(time).format('h:mm A')
+    convertDate(time: any) {
+      return dayjs(time).format('DD/MM HH:mm')
+    },
+    convertDay(time: any) {
+      return dayjs(time).format('DD/MM')
     }
   }
 });
