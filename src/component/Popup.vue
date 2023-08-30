@@ -24,13 +24,13 @@
       </swiper>
       <!-- Input field -->
       <div>
-        <ion-item>
+        <ion-item lines="none">
           <ion-input label="Chọn món:" class="inputData" v-model="params.content_order" placeholder="vd: 'thịt gà rang , cá kho ,mướp xào'"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item lines="none">
           <ion-input label="Chọn giá:" type="number" class="inputData" v-model="params.price" placeholder="vd: '30,000 VND'"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item lines="none">
           <ion-input label="Ghi chú:" class="inputData" v-model="params.note_order" placeholder="vd: 'Cho nhiều cơm, ít cơm'"></ion-input>
         </ion-item>
       </div>
