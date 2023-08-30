@@ -1,61 +1,62 @@
 <template>
-  <div>
-    <div class="border-form">
-      <ion-title class="title-login">Đăng nhập</ion-title>
-      <ion-grid>
-        <ion-row>
-          <form class="form-login">
-            <ion-input
-                id="username"
-                label="User name"
-                label-placement="floating"
-                v-model="username"
-                name="username"
-                :counter="true"
-                :maxlength="40"
-                type="text"
-                :counter-formatter="customFormatter"
-                @input="handleValidateUserName"
-            >
-            </ion-input>
-             <ion-text color="danger">
-              <p v-show="usernameValid" >Username is required</p>
-            </ion-text>
-            <ion-input
-                id="custom-input"
-                label="Password"
-                v-model="password"
-                name="password"
-                label-placement="floating"
-                :counter="true"
-                :maxlength="40"
-                type="password"
-                :counter-formatter="customFormatter"
-                @input="handleValidatePassword"
-            >
-            </ion-input>
-             <ion-text color="danger">
-              <p v-show="passwordValid">Password is required</p>
-            </ion-text>
-          </form>
-        </ion-row>
-        <div class="btn-spacing">
-          <ion-buttons class="btn-login" >
-            <ion-button @click="onLogin()" type="submit" expand="block"
-                        class="button-login"
-                        :class="(usernameValid || passwordValid)  || (!username || !password) ? 'btn-disable' : 'btn-active'"
-                        :disabled="(usernameValid || passwordValid) || (!username || !password)"
-            >
-              Đăng nhập
-            </ion-button>
-          </ion-buttons>
-        </div>
-        <ion-text color="danger" class="error-custom">
-          <p v-show="logError">{{logError}}</p>
-        </ion-text>
-      </ion-grid>
-    </div>
-  </div>
+  <ion-page>
+    <ion-content>
+      <div class="border-form">
+        <ion-grid>
+          <ion-row>
+            <form class="form-login">
+              <ion-input
+                  id="username"
+                  label="User name"
+                  label-placement="floating"
+                  v-model="username"
+                  name="username"
+                  :counter="true"
+                  :maxlength="40"
+                  type="text"
+                  :counter-formatter="customFormatter"
+                  @input="handleValidateUserName"
+              >
+              </ion-input>
+              <ion-text color="danger">
+                <p v-show="usernameValid" >Username is required</p>
+              </ion-text>
+              <ion-input
+                  id="custom-input"
+                  label="Password"
+                  v-model="password"
+                  name="password"
+                  label-placement="floating"
+                  :counter="true"
+                  :maxlength="40"
+                  type="password"
+                  :counter-formatter="customFormatter"
+                  @input="handleValidatePassword"
+              >
+              </ion-input>
+              <ion-text color="danger">
+                <p v-show="passwordValid">Password is required</p>
+              </ion-text>
+            </form>
+          </ion-row>
+          <div class="btn-spacing">
+            <ion-buttons class="btn-login" >
+              <ion-button @click="onLogin()" type="submit" expand="block"
+                          class="button-login"
+                          :class="(usernameValid || passwordValid)  || (!username || !password) ? 'btn-disable' : 'btn-active'"
+                          :disabled="(usernameValid || passwordValid) || (!username || !password)"
+              >
+                Đăng nhập
+              </ion-button>
+            </ion-buttons>
+          </div>
+          <ion-text color="danger" class="error-custom">
+            <p v-show="logError">{{logError}}</p>
+          </ion-text>
+        </ion-grid>
+      </div>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script  lang="ts">
@@ -63,20 +64,22 @@ import
 {
   IonCol,
   IonGrid,
-  IonRow ,
+  IonRow,
   IonInput,
   IonTitle,
   IonButton,
   IonButtons,
   IonText,
-  IonToolbar
+  IonToolbar,
+  IonPage,
+  IonContent
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: "Login",
   components: {
-    IonCol, IonGrid, IonRow, IonInput, IonTitle, IonButton, IonToolbar , IonText, IonButtons
+    IonCol, IonGrid, IonRow, IonInput, IonTitle, IonButton, IonToolbar , IonText, IonButtons , IonPage, IonContent
   },
   setup() {},
   data() {
@@ -123,6 +126,7 @@ export default defineComponent({
         }
         this.accounts.forEach((item:any) => {
           if (item.username == user.username && item.password == user.password) {
+            this.logError = ''
             window.location.replace('/home')
           } else {
             this.logError = 'Username or password is false'

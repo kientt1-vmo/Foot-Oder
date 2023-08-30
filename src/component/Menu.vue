@@ -18,13 +18,13 @@
             <div class="menu-info">
               <div >Loại: <span >{{ item.tags }}</span> </div>
               <div>Giá trung bình: {{item.price_min}} VND - {{item.price_max}} VND </div>
-              <div>Thời gian order: {{item.start_time_order}} - {{item.end_time_order}}</div>
+              <div>Thời gian order: {{convertDayJsToHM(item.start_time_order)}} - {{convertDayJsToHM(item.end_time_order)}}</div>
               <div>Số lượng giới hạn: {{item.limit_slot}} suất</div>
               <div>Người quản lý đơn: {{item.user_created}}</div>
             </div>
           </ion-card-content>
           <ion-card-content class="card-title">
-            <ion-button @click="eventClickOrder(item, index)"> Đặt </ion-button>
+            <ion-button :disabled="disableBtn(item.end_time_order)"  @click="eventClickOrder(item, index)"> Đặt </ion-button>
           </ion-card-content>
         </ion-card>
       </div>
@@ -70,6 +70,7 @@ import {
 } from "@ionic/vue";
 import { defineComponent, ref } from "vue";
 import Popup from "@/component/Popup.vue";
+import dayjs from 'dayjs'
 export default defineComponent({
   components: {
     IonButtons,
@@ -144,8 +145,8 @@ export default defineComponent({
           tags: 'Cơm, Bún trộn, Cơm rang',
           price_min: '25.000',
           price_max: '50.000',
-          start_time_order: '10:30',
-          end_time_order: '11:15',
+          start_time_order: '2023-08-30 15:08:55',
+          end_time_order: '2023-08-30 14:08:55',
           limit_slot: 30,
           user_created: 'trungtn',
         },
@@ -170,8 +171,8 @@ export default defineComponent({
           tags: 'Kem Trà sữa Trà đào Nước ép',
           price_min: '20.000',
           price_max: '45.000',
-          start_time_order: '10:30',
-          end_time_order: '11:15',
+          start_time_order: '2023-08-30 15:08:55',
+          end_time_order: '2023-08-30 14:08:55',
           limit_slot: 20,
           user_created: 'trungtn',
         },
@@ -196,8 +197,8 @@ export default defineComponent({
           tags: 'Cơm, Bún trộn, Cơm rang',
           price_min: '25.000',
           price_max: '50.000',
-          start_time_order: '10:30',
-          end_time_order: '11:15',
+          start_time_order: '2023-08-30 15:08:55',
+          end_time_order: '2023-08-30 14:08:55',
           limit_slot: 30,
           user_created: 'trungtn',
         },
@@ -222,8 +223,8 @@ export default defineComponent({
           tags: 'Cơm, Bún trộn, Cơm rang',
           price_min: '25.000',
           price_max: '50.000',
-          start_time_order: '10:30',
-          end_time_order: '11:15',
+          start_time_order: '2023-08-30 15:08:55',
+          end_time_order: '2023-08-30 15:08:55',
           limit_slot: 30,
           user_created: 'trungtn',
         },
@@ -248,8 +249,8 @@ export default defineComponent({
           tags: 'Cơm, Bún trộn, Cơm rang',
           price_min: '25.000',
           price_max: '50.000',
-          start_time_order: '10:30',
-          end_time_order: '11:15',
+          start_time_order: '2023-08-30 15:08:55',
+          end_time_order: '2023-08-30 14:08:55',
           limit_slot: 30,
           user_created: 'trungtn',
         }
@@ -261,6 +262,12 @@ export default defineComponent({
       this.selectedItem = item
       this.showPopup = true
     },
+    disableBtn(time: any) {
+      return dayjs().isAfter(dayjs(time))
+    },
+    convertDayJsToHM(time: any) {
+      return dayjs(time).format('h:mm A')
+    }
   }
 });
 </script>
@@ -270,8 +277,7 @@ export default defineComponent({
   text-align: center;
 }
 .menu-info {
-  color: white;
-  font-weight: 400;
+  font-weight: 800;
   margin: 10px 0 10px 0;
 }
 .img-card {
@@ -280,6 +286,7 @@ export default defineComponent({
 
 .item-card {
   border-radius: 20px;
+  border: solid;
 }
 @media screen and (min-width: 768px) {
   .item-card {

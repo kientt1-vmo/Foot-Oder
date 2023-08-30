@@ -19,7 +19,7 @@
   </ion-menu>
 </template>
 <script lang="ts">
-  import {IonButton, IonHeader, IonLabel, IonList, IonMenu, IonTitle, IonToolbar} from "@ionic/vue";
+import {IonButton, IonHeader, IonLabel, IonList, IonMenu, IonTitle, IonToolbar} from "@ionic/vue";
 import { defineComponent} from "vue";
 
   export default defineComponent({
@@ -28,6 +28,9 @@ import { defineComponent} from "vue";
     IonHeader,
     IonTitle,
     IonButton,
+    IonMenu,
+    IonLabel,
+    IonList
   },
   })
 </script>
@@ -51,6 +54,6 @@ ion-menu::part(backdrop) {
 ion-menu::part(container) {
   border-radius: 0 20px 20px 0;
 
-  box-shadow: 4px 0px 16px rgba(134, 48, 134, 0.18);
+  box-shadow: 4px 0 16px rgba(134, 48, 134, 0.18);
 }
 </style>

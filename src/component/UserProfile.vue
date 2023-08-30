@@ -33,6 +33,7 @@ import {
   IonItem,
   IonPopover,
   IonButton,
+  IonContent
 } from "@ionic/vue";
 import { ComputedRef, defineComponent, ref } from "vue";
 import { logOutOutline } from "ionicons/icons";
@@ -46,6 +47,7 @@ export default defineComponent({
     IonItem,
     IonPopover,
     IonButton,
+    IonContent
   },
 
   data() {
