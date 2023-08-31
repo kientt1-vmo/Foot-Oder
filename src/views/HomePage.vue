@@ -8,7 +8,7 @@
             <ion-menu-button></ion-menu-button>
             <ion-title>Trang chủ</ion-title>
           </ion-buttons>
-          <UserProfile class="ion-padding" slot="end"/>
+          <UserProfile class="ion-padding" slot="end" />
         </ion-toolbar>
       </ion-header>
       <ion-content :fullscreen="true">
@@ -17,6 +17,12 @@
         </div>
       </ion-content>
     </ion-page>
+    <ion-icon
+      v-show="showChatIcon"
+      class="chat-icon"
+      :icon="chatbubblesOutline"
+      @click="goToChatPage"
+    ></ion-icon>
   </div>
 </template>
 
@@ -38,13 +44,16 @@ import {
   IonList,
   IonButton,
   IonImg,
-  IonLabel
+  IonLabel,
+  IonIcon,
 } from "@ionic/vue";
 import { defineComponent, ref } from "vue";
 import Popup from "@/component/Popup.vue";
-import Menu from "@/component/Menu.vue"
+import Menu from "@/component/Menu.vue";
 import MenuHeader from "@/component/MenuHeader.vue";
 import UserProfile from "@/component/UserProfile.vue";
+import { chatbubblesOutline } from "ionicons/icons";
+
 export default defineComponent({
   components: {
     MenuHeader,
@@ -67,11 +76,37 @@ export default defineComponent({
     Popup,
     Menu,
     IonLabel,
-    UserProfile
+    UserProfile,
+    IonIcon,
   },
   setup() {
-    return {};
+    return {
+      chatbubblesOutline,
+    };
   },
+  data() {
+    return {
+      showChatIcon: true,
+    };
+  },
+  methods: {
+    goToChatPage() {
+      this.$router.push("/chat");
+    },
+  }
 });
 </script>
 
+<style scoped>
+.chat-icon {
+  position: fixed;
+  bottom: 50px;
+  right: 40px;
+  font-size: 35px;
+  color: rgb(10, 10, 10);
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+}
+</style>
