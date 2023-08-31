@@ -14,7 +14,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content :fullscreen="true" class="ion-padding">
-        <ion-item>
+        <ion-item v-if="isMobile"> 
           <ion-button
             class="btn-take-photo"
             color="primary"
@@ -25,7 +25,7 @@
             Chụp ảnh
           </ion-button>
         </ion-item>
-        <ion-item>
+        <ion-item v-else>
           <input type="file" @change="handleImageChange" accept="image/*" />
         </ion-item>
         <ion-item v-if="uploadedImage">
@@ -137,6 +137,11 @@ export default defineComponent({
       cameraOutline,
       chatbubblesOutline,
     };
+  },
+  computed: {
+    isMobile() {
+      return window.innerWidth <= 768; // Tùy chỉnh kích thước màn hình để xác định ngưỡng là điện thoại hoặc máy tính
+    },
   },
   methods: {
     handleImageChange(event: Event) {
