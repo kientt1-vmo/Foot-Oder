@@ -34,6 +34,7 @@
     <ion-footer>
       <ion-toolbar>
         <ion-textarea
+            class="ion-margin-start"
           v-model="newMessage"
           placeholder="Type your message"
         ></ion-textarea>
