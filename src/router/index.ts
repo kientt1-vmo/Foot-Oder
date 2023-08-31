@@ -4,7 +4,7 @@ import HomePage from '../views/HomePage.vue'
 import Login from "@/views/Login.vue";
 import FeedBack from '@/views/FeedBack.vue';
 import Debt from '../views/Debt.vue';
-
+import Chat from '../component/Chat.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -31,6 +31,10 @@ const routes: Array<RouteRecordRaw> = [
      name: 'Login',
      component: Login,
      props: true
+  },
+  {
+    path: '/chat',
+    component: Chat,
   },
 ]
 

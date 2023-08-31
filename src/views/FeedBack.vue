@@ -15,12 +15,15 @@
       </ion-header>
       <ion-content :fullscreen="true" class="ion-padding">
         <ion-item>
-          
-          <ion-button class="btn-take-photo" color="primary" @click="takePhoto"  icon-only
-            >
+          <ion-button
+            class="btn-take-photo"
+            color="primary"
+            @click="takePhoto"
+            icon-only
+          >
             <ion-icon class="ion-photo" :icon="cameraOutline"></ion-icon>
             Chụp ảnh
-            </ion-button>
+          </ion-button>
         </ion-item>
         <ion-item>
           <input type="file" @change="handleImageChange" accept="image/*" />
@@ -55,6 +58,12 @@
       :buttons="alertButtons"
       @ionBackdropTap="dismissAlert"
     ></ion-alert>
+    <ion-icon
+      v-show="showChatIcon"
+      class="chat-icon"
+      :icon="chatbubblesOutline"
+      @click="goToChatPage"
+    ></ion-icon>
   </div>
 </template>
 
@@ -72,13 +81,13 @@ import {
   IonButtons,
   IonAlert,
   IonTextarea,
-  IonIcon 
+  IonIcon,
 } from "@ionic/vue";
 import { computed, defineComponent, ref } from "vue";
 import MenuHeader from "@/component/MenuHeader.vue";
 import UserProfile from "@/component/UserProfile.vue";
 import { Camera, CameraResultType } from "@capacitor/camera";
-import { cameraOutline } from 'ionicons/icons';
+import { cameraOutline, chatbubblesOutline } from "ionicons/icons";
 
 export default defineComponent({
   name: "FeedBack",
@@ -97,12 +106,13 @@ export default defineComponent({
     IonAlert,
     UserProfile,
     IonTextarea,
-    IonIcon 
+    IonIcon,
   },
   data() {
     return {
       uploadedImage: "",
       textInput: "",
+      showChatIcon: true,
     };
   },
   setup() {
@@ -124,7 +134,8 @@ export default defineComponent({
       isOpen,
       dismissAlert,
       alertButtons,
-      cameraOutline
+      cameraOutline,
+      chatbubblesOutline,
     };
   },
   methods: {
@@ -162,6 +173,9 @@ export default defineComponent({
         this.uploadedImage = dataUrl;
       }
     },
+    goToChatPage() {
+      this.$router.push("/chat");
+    },
   },
 });
 </script>
@@ -195,12 +209,23 @@ ion-menu::part(container) {
   height: 40px;
   margin-bottom: 10px;
 }
-.ion-photo{
+.ion-photo {
   margin-right: 5px;
 }
 .text-area {
   min-height: 200px;
   padding: 4px 0 4px 0;
   margin: 8px 0 8px 0;
+}
+.chat-icon {
+  position: fixed;
+  bottom: 50px;
+  right: 40px;
+  font-size: 35px;
+  color: rgb(14, 13, 13);
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
 }
 </style>

@@ -1,14 +1,14 @@
 <template>
   <div>
     <MenuHeader></MenuHeader>
-    <ion-page id="main-content" >
+    <ion-page id="main-content">
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
           <ion-title>{{ title }}</ion-title>
-          <UserProfile class="ion-padding" slot="end"/>
+          <UserProfile class="ion-padding" slot="end" />
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
@@ -53,6 +53,12 @@
       :buttons="alertButtons"
       @ionBackdropTap="dismissAlert"
     ></ion-alert>
+    <ion-icon
+      v-show="showChatIcon"
+      class="chat-icon"
+      :icon="chatbubblesOutline"
+      @click="goToChatPage"
+    ></ion-icon>
   </div>
 </template>
 
@@ -67,11 +73,13 @@ import {
   IonButton,
   IonImg,
   IonAlert,
+  IonIcon,
 } from "@ionic/vue";
 import { computed, defineComponent, ref } from "vue";
 import MenuHeader from "@/component/MenuHeader.vue";
 import ImageModal from "@/component/ImageModal.vue";
 import UserProfile from "@/component/UserProfile.vue";
+import { chatbubblesOutline } from "ionicons/icons";
 
 export default defineComponent({
   name: "Debt",
@@ -87,13 +95,15 @@ export default defineComponent({
     IonImg,
     ImageModal,
     IonAlert,
-    UserProfile
+    UserProfile,
+    IonIcon,
   },
   data() {
     return {
       uploadedImage: "",
       textInput: "",
       showImageModal: false,
+      showChatIcon: true,
     };
   },
   setup() {
@@ -140,6 +150,7 @@ export default defineComponent({
       isOpen,
       dismissAlert,
       alertButtons,
+      chatbubblesOutline,
     };
   },
 
@@ -153,7 +164,11 @@ export default defineComponent({
       return "Trang chủ";
     },
   },
-  methods: {},
+  methods: {
+    goToChatPage() {
+      this.$router.push("/chat");
+    },
+  },
 });
 </script>
 
@@ -176,7 +191,7 @@ export default defineComponent({
   font-weight: 700;
   height: 40px;
 }
-.item-table{
+.item-table {
   font-size: large;
 }
 ion-menu::part(backdrop) {
@@ -187,5 +202,16 @@ ion-menu::part(container) {
   border-radius: 0 20px 20px 0;
 
   box-shadow: 4px 0px 16px rgba(134, 48, 134, 0.18);
+}
+.chat-icon {
+  position: fixed;
+  bottom: 50px;
+  right: 40px;
+  font-size: 35px;
+  color: rgb(17, 17, 17);
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
 }
 </style>
