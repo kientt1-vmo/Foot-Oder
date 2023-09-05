@@ -74,6 +74,11 @@ import {
   IonImg,
   IonAlert,
   IonIcon,
+  IonMenuButton,
+  IonLabel,
+  IonItem,
+  IonList,
+  IonButtons,
 } from "@ionic/vue";
 import { computed, defineComponent, ref } from "vue";
 import MenuHeader from "@/component/MenuHeader.vue";
@@ -97,6 +102,11 @@ export default defineComponent({
     IonAlert,
     UserProfile,
     IonIcon,
+    IonMenuButton,
+    IonLabel,
+    IonItem,
+    IonList,
+    IonButtons
   },
   data() {
     return {
