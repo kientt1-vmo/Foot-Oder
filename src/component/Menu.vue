@@ -1,7 +1,7 @@
 <template>
   <ion-grid>
     <ion-row>
-      <div v-for="(item,index) in slots"
+      <ion-list v-for="(item,index) in slots"
            :key="index"
       >
         <ion-card class="item-card">
@@ -27,7 +27,10 @@
             <ion-button :disabled="disableBtn(item.end_time_order)"  @click="eventClickOrder(item, index)"> Đặt </ion-button>
           </ion-card-content>
         </ion-card>
-      </div>
+      </ion-list>
+      <ion-infinite-scroll @ionInfinite="ionInfinite">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
       <popup
           :show-popup="showPopup"
           :data="selectedItem"
@@ -49,6 +52,8 @@
 <script lang="ts">
 import {
   IonCardTitle,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
   IonButtons,
   IonContent,
   IonHeader,
@@ -68,13 +73,15 @@ import {
   IonRow,
   IonAlert,
 } from "@ionic/vue";
-import { defineComponent, ref } from "vue";
+import {defineComponent, reactive, ref} from "vue";
 import Popup from "@/component/Popup.vue";
 import dayjs from 'dayjs'
 export default defineComponent({
   components: {
     IonButtons,
     IonContent,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
     IonHeader,
     IonMenu,
     IonMenuButton,
@@ -94,7 +101,7 @@ export default defineComponent({
     IonRow,
     IonAlert,
   },
-  setup() {
+  setup: function () {
     const showPopup = ref(false);
 
     const closePopup = () => {
@@ -111,6 +118,19 @@ export default defineComponent({
     const setOpen = (state: boolean) => {
       isOpen.value = state;
     };
+    const items = reactive([]);
+
+    const generateItems = () => {
+      const count = items.length + 1;
+      for (let i = 0; i < 50; i++) {
+        items.push(`Item ${count + i}`);
+      }
+    };
+
+    const ionInfinite = (ev: any) => {
+      generateItems();
+      setTimeout(() => ev.target.complete(), 500);
+    };
     return {
       setOpen,
       alertButtons,
@@ -118,6 +138,8 @@ export default defineComponent({
       showPopup,
       closePopup,
       handleSubmit,
+      ionInfinite,
+      items
     };
   },
   data() {
@@ -253,7 +275,7 @@ export default defineComponent({
           end_time_order: '2023-08-30 19:08:55',
           limit_slot: 30,
           user_created: 'trungtn',
-        }
+        },
       ],
     }
   },

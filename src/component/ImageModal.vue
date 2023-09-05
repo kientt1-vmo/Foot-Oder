@@ -7,19 +7,16 @@
     </ion-header>
     <ion-content class="ion-text-center">
       <ion-img
-        class="full-width"
-        src="https://tse2.mm.bing.net/th?id=OIP.DLME37PkypABEXbcBXfzIAHaFg&pid=Api&P=0&h=220"
-        alt="Ảnh xác nhận trả nợ"
-      ></ion-img>
-      <ion-button expand="full" class="button-cancel" @click="dismissModal"
-        >Hủy</ion-button
-      >
+            class="img"
+            src="/img/techcombank.png"
+            alt="Ảnh xác nhận trả nợ"
+        ></ion-img>
+      <ion-button expand="full" class="button-cancel" @click="dismissModal">Hủy</ion-button>
       <ion-button
-        expand="full"
-        class="button-confirm"
-        @click="confirmPaymentAndDismiss"
-        >Xác nhận</ion-button
-      >
+          expand="full"
+          class="button-confirm"
+          @click="confirmPaymentAndDismiss"
+      >Xác nhận</ion-button>
     </ion-content>
   </ion-modal>
 </template>
@@ -33,6 +30,7 @@ import {
   IonModal,
   IonToolbar,
   IonTitle,
+  IonItem
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 
@@ -46,6 +44,7 @@ export default defineComponent({
     IonModal,
     IonToolbar,
     IonTitle,
+    IonItem
   },
   props: {
     show: {
@@ -71,5 +70,8 @@ export default defineComponent({
 .button-cancel {
   margin-top: 10px;
   --background: #c02929;
+}
+.img {
+  padding: 2% 3%;
 }
 </style>
