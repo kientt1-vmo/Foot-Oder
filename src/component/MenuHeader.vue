@@ -14,6 +14,9 @@
         <ion-button href="/debts" class="btn-menu">
           <ion-label>Khoản nợ</ion-label>
         </ion-button>
+        <ion-button href="/record" class="btn-menu">
+          <ion-label>Ghi âm</ion-label>
+        </ion-button>
       </ion-list>
     </ion-header>
   </ion-menu>
