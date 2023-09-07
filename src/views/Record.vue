@@ -13,9 +13,10 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-      <ion-button class="btn-record" color="warning" @click="toggleRecording">
+      <ion-button expand="full" class="btn-record" color="warning" @click="toggleRecording">
         {{ isRecording ? "Dừng ghi âm" : "Bắt đầu ghi" }}
       </ion-button>
+      <ion-button expand="full" class="btn-file" @click="browseRecording">Duyệt</ion-button>
       <ion-list>
         <ion-item v-for="(file, index) in recordedFiles" :key="index">
           {{ file.name }}
@@ -109,14 +110,24 @@ export default defineComponent({
     deleteRecording(index: number) {
       this.recordedFiles.splice(index, 1);
     },
+    browseRecording() {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "audio/*";
+      input.addEventListener("change", (event) => {
+        const fileInput = event.target as HTMLInputElement | null;
+        if (fileInput && fileInput.files && fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          this.recordedFiles.push(file);
+          this.playRecording(this.recordedFiles.length - 1);
+        }
+      });
+      input.click();
+    },
   },
 });
 </script>
 
 <style scoped>
-.btn-record {
-  position: fixed;
-  bottom: 20px;
-  right: 137px;
-}
+
 </style>
